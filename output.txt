@@ -1,0 +1,1 @@
+[{"patients":[{"healthIndex":96,"myDisease":{"startingHealthIndex":96,"name":"Skin Problems","associatedSpecialty":{"name":"Dermatology","numOfTreatments":5,"fullCurePossible":false}},"name":"jay","healed":false,"dead":false}],"name":"jay","specialty":{"name":"Dermatology","numOfTreatments":5,"fullCurePossible":false}}]

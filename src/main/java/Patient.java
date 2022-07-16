@@ -39,7 +39,6 @@ public class Patient {
         return this.healthIndex <= 0;
     }
 
-    // TODO: add tostring() method
 
 
     private String name;

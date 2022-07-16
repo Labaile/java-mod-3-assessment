@@ -34,15 +34,16 @@ public class HospitalWorld {
         while (numOfDocs < 0) {
             System.out.print("Please enter number of doctors (in integers): ");
             try {
-                numOfDocs = scanner.nextInt();
+                String num = scanner.nextLine();
+                numOfDocs = Integer.parseInt(num);
                 if (numOfDocs < 0) {
                     System.out.println("Please enter a positive number.");
                 }
-            } catch (InputMismatchException e) {
+            } catch (NumberFormatException e) {
                 numOfDocs = -1;
-                System.out.println("\nERROR: Integer not entered.\nPlease enter an integer.\n");
+                System.out.println("\nERROR: No integer entered.\nPlease enter an integer.\n");
             }
-            scanner.nextLine();
+
         }
 
 
@@ -57,42 +58,51 @@ public class HospitalWorld {
                 }
             } while (docName.isBlank());
 
-            System.out.println("\nDoctor specialty: ");
-            System.out.println("Enter 1 for Dermatology");
-            System.out.println("Enter 2 for Cardiology");
-            System.out.println("Enter 3 for Radiology");
-            System.out.println("Enter 4 for General");
-            System.out.print("Option: ");
-            String choice = scanner.nextLine();
+            String choice = "";
             String docSpec = "";
-            int numOfTreatments;
-            boolean hasFullCure;
+            int numOfTreatments = 0;
+            boolean hasFullCure = false;
+            do {
+                System.out.println("\nDoctor specialty: ");
+                System.out.println("Enter 1 for Dermatology");
+                System.out.println("Enter 2 for Cardiology");
+                System.out.println("Enter 3 for Radiology");
+                System.out.println("Enter 4 for General");
 
-            if (choice.equals("1")) {
-                docSpec = "Dermatology";
-                numOfTreatments = 5;
-                hasFullCure = false;
-            } else if (choice.equals("2")) {
-                docSpec = "Cardiology";
-                numOfTreatments = 8;
-                hasFullCure = true;
-            } else if (choice.equals("3")) {
-                docSpec = "Radiology";
-                numOfTreatments = 10;
-                hasFullCure = false;
-            } else if (choice.equals("4")) {
-                docSpec = "General";
-                numOfTreatments = 2;
-                hasFullCure = true;
-            } else {
-                System.out.println("Error: please enter numbers between 1 and 4");
-                return;
-            }
+                System.out.print("Option: ");
+                choice = scanner.nextLine();
+
+                if (choice.isBlank()) {
+                    System.out.println("Error: please enter an integer");
+                } else {
+                    if (choice.equals("1")) {
+                        docSpec = "Dermatology";
+                        numOfTreatments = 5;
+                        hasFullCure = false;
+                    } else if (choice.equals("2")) {
+                        docSpec = "Cardiology";
+                        numOfTreatments = 8;
+                        hasFullCure = true;
+                    } else if (choice.equals("3")) {
+                        docSpec = "Radiology";
+                        numOfTreatments = 10;
+                        hasFullCure = false;
+                    } else if (choice.equals("4")) {
+                        docSpec = "General";
+                        numOfTreatments = 2;
+                        hasFullCure = true;
+                    } else {
+                        System.out.println("Error: please enter an integer between 1 and 4");
+                        choice = "";
+                    }
+                }
+            } while (choice.isBlank());
 
             Specialty specialty = new Specialty(docSpec, numOfTreatments, hasFullCure);
             specialties.add(specialty);
             Doctor doctor = new Doctor(docName, specialty);
             doctors.add(doctor);
+
         }
         hospital.setDoctors(doctors);
 
@@ -127,44 +137,46 @@ public class HospitalWorld {
                 }
             } while (patientName.isBlank());
 
-
-            if (patientName.isEmpty()) {
-                System.out.println("Error: please enter name of patient");
-                return;
-            }
-
-            System.out.println("\nPatient's ailment: ");
-            System.out.println("Enter 1 for Skin Problems");
-            System.out.println("Enter 2 for Heart Problems");
-            System.out.println("Enter 3 for Fractured Bones");
-            System.out.println("Enter 4 for General Problems");
-            System.out.print("Option: ");
-
-            String choice = scanner.nextLine();
+            String choice = "";
             String reqSpecialityName = "";
             String ailmentName = "";
             int startingHealthIndex = 0;
+            do {
+                System.out.println("\nPatient's ailment: ");
+                System.out.println("Enter 1 for Skin Problems");
+                System.out.println("Enter 2 for Heart Problems");
+                System.out.println("Enter 3 for Fractured Bones");
+                System.out.println("Enter 4 for General Problems");
 
-            if (choice.equals("1")) {
-                reqSpecialityName = "Dermatology";
-                ailmentName = "Skin Problems";
-                startingHealthIndex = 96;
-            } else if (choice.equals("2")) {
-                reqSpecialityName = "Cardiology";
-                ailmentName = "Heart Problems";
-                startingHealthIndex = 50;
-            } else if (choice.equals("3")) {
-                reqSpecialityName = "Radiology";
-                ailmentName = "Fractured Bones";
-                startingHealthIndex = 70;
-            } else if (choice.equals("4")) {
-                reqSpecialityName = "General";
-                ailmentName = "General Problems";
-                startingHealthIndex = 85;
-            } else {
-                System.out.println("Error: please enter numbers between 1 and 4");
-                return;
-            }
+                System.out.print("Option: ");
+                choice = scanner.nextLine();
+
+                if (choice.isBlank()) {
+                    System.out.println("Error: please enter an integer");
+                } else {
+
+                    if (choice.equals("1")) {
+                        reqSpecialityName = "Dermatology";
+                        ailmentName = "Skin Problems";
+                        startingHealthIndex = 96;
+                    } else if (choice.equals("2")) {
+                        reqSpecialityName = "Cardiology";
+                        ailmentName = "Heart Problems";
+                        startingHealthIndex = 50;
+                    } else if (choice.equals("3")) {
+                        reqSpecialityName = "Radiology";
+                        ailmentName = "Fractured Bones";
+                        startingHealthIndex = 70;
+                    } else if (choice.equals("4")) {
+                        reqSpecialityName = "General";
+                        ailmentName = "General Problems";
+                        startingHealthIndex = 85;
+                    } else {
+                        System.out.println("Error: please enter an integer between 1 and 4");
+                        choice = "";
+                    }
+                }
+            } while (choice.isBlank());
 
             Specialty reqSpeciality = null;
             for (Specialty specialty : specialties) {
@@ -194,39 +206,48 @@ public class HospitalWorld {
         }
 
         String choice = "";
-        System.out.print("Would you like to treat a patient? (Y/N): ");
-        choice = scanner.nextLine();
 
-        while (!choice.equals("N")) { // look out for issues
-            if (choice.equalsIgnoreCase("Y")) {
-                System.out.println("Choose patient below: ");
-                int i = 1;
-                for (Patient patient : patients) {
-                    System.out.println("Enter " + i + " for " + patient);
-                    i++;
-                }
-                System.out.print("Choice: ");
-                int patientNo = scanner.nextInt();
-                if (patientNo >= 1 && patientNo <= patients.size()) {
-                    Patient patient = patients.get(patientNo-1);
-                    int reqNumOfTreatments = patient.getMyDisease().getAssociatedSpecialty().getNumOfTreatments();
-                    if (!patient.isDead() && !patient.isHealed() && reqNumOfTreatments > 0) {
-                        System.out.println("Number of treatments: " + reqNumOfTreatments);
-                        int gainFromTreatment = (100 - patient.getHealthIndex()) / reqNumOfTreatments;
-                        System.out.println(patient.getName() + "'s health index: " + patient.getHealthIndex());
-                        patient.receiveTreatment(gainFromTreatment);
-                        System.out.println(patient.getName() + "'s new health index: " + patient.getHealthIndex());
-                    } else {
-                        System.out.println("Patient does not need to be treated");
-                    }
-                }
-            } else {
-                break;
-            }
-            scanner.nextLine();
+        do {
             System.out.print("Would you like to treat a patient? (Y/N): ");
             choice = scanner.nextLine();
-        }
+
+            if (choice.isBlank()) {
+                System.out.println("Error: please enter 'Y' or 'N'");
+            } else {
+                while (!choice.equalsIgnoreCase("N")) { // look out for issues
+                    if (choice.equalsIgnoreCase("Y")) {
+                        System.out.println("Choose patient below: ");
+                        int i = 1;
+                        for (Patient patient : patients) {
+                            System.out.println("Enter " + i + " for " + patient);
+                            i++;
+                        }
+                        System.out.print("Choice: ");
+                        int patientNo = scanner.nextInt();
+                        if (patientNo >= 1 && patientNo <= patients.size()) {
+                            Patient patient = patients.get(patientNo-1);
+                            int reqNumOfTreatments = patient.getMyDisease().getAssociatedSpecialty().getNumOfTreatments();
+                            if (!patient.isDead() && !patient.isHealed() && reqNumOfTreatments > 0) {
+                                System.out.println("Number of treatments: " + reqNumOfTreatments);
+                                int gainFromTreatment = (100 - patient.getHealthIndex()) / reqNumOfTreatments;
+                                System.out.println(patient.getName() + "'s health index: " + patient.getHealthIndex());
+                                patient.receiveTreatment(gainFromTreatment);
+                                System.out.println(patient.getName() + "'s new health index: " + patient.getHealthIndex());
+                            } else {
+                                System.out.println("Patient does not need to be treated");
+                            }
+                        }
+                    } else {
+                        choice = "";
+                        System.out.println("Error: please enter 'Y' or 'N'");
+                        break;
+                    }
+                    scanner.nextLine();
+                    System.out.print("Would you like to treat a patient? (Y/N): ");
+                    choice = scanner.nextLine();
+                }
+            }
+        } while (choice.isBlank());
 
         // printing hospital details
         System.out.println(hospital);
