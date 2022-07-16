@@ -14,13 +14,15 @@ public class HospitalWorld {
         List<Specialty> specialties = new ArrayList<>();
 
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter hospital name: ");
-        String hospitalName = scanner.nextLine();
+        String hospitalName = "";
 
-        if (hospitalName.isEmpty()) {
-            System.out.println("Error: please enter name of hospital");
-            return;
-        }
+        do {
+            System.out.print("Enter hospital name: ");
+            hospitalName = scanner.nextLine();
+            if (hospitalName.isBlank()) {
+                System.out.println("Error: please enter name of hospital");
+            }
+        } while (hospitalName.isBlank());
 
         // instantiating hospital object and the list of doctors
         Hospital hospital = new Hospital(hospitalName);
@@ -46,12 +48,14 @@ public class HospitalWorld {
 
         // instantiating doctor objects based on user input, and adding to hospital list of docs
         for (int i = 0; i < numOfDocs; i++) {
-            System.out.print("\nEnter the name of doctor: ");
-            String docName = scanner.nextLine();
-            if (docName.isEmpty()) {
-                System.out.println("Error: please enter name of doctor");
-                return;
-            }
+            String docName = "";
+            do {
+                System.out.print("\nEnter the name of doctor: ");
+                docName = scanner.nextLine();
+                if (docName.isBlank()) {
+                    System.out.println("Error: please enter name of doctor");
+                }
+            } while (docName.isBlank());
 
             System.out.println("\nDoctor specialty: ");
             System.out.println("Enter 1 for Dermatology");
@@ -114,8 +118,16 @@ public class HospitalWorld {
 
         // instantiating patient objects and asking about required specialities
         for (int j = 0; j < numOfPatients; j++) {
-            System.out.print("Enter the name of the patient: ");
-            String patientName = scanner.nextLine();
+            String patientName = "";
+            do {
+                System.out.print("Enter the name of the patient: ");
+                patientName = scanner.nextLine();
+                if (patientName.isBlank()) {
+                    System.out.println("Error: please enter name of patient");
+                }
+            } while (patientName.isBlank());
+
+
             if (patientName.isEmpty()) {
                 System.out.println("Error: please enter name of patient");
                 return;
@@ -190,18 +202,17 @@ public class HospitalWorld {
                 System.out.println("Choose patient below: ");
                 int i = 1;
                 for (Patient patient : patients) {
-                    System.out.println("Enter " + i + "for " + patient);
+                    System.out.println("Enter " + i + " for " + patient);
                     i++;
                 }
-                System.out.println("Choice: ");
+                System.out.print("Choice: ");
                 int patientNo = scanner.nextInt();
-                if (patientNo >= 1 && patientNo <= 4) {
+                if (patientNo >= 1 && patientNo <= patients.size()) {
                     Patient patient = patients.get(patientNo-1);
-                    if (!patient.isDead() && !patient.isHealed()) {
-                        int reqNumOfTreatments = patient.getMyDisease().getAssociatedSpecialty().getNumOfTreatments();
-                        int treatmentPoints = (100 - patient.getHealthIndex()) / reqNumOfTreatments;
-                        int currentHealthIndex = patient.getHealthIndex();
-                        int gainFromTreatment = currentHealthIndex + treatmentPoints;
+                    int reqNumOfTreatments = patient.getMyDisease().getAssociatedSpecialty().getNumOfTreatments();
+                    if (!patient.isDead() && !patient.isHealed() && reqNumOfTreatments > 0) {
+                        System.out.println("Number of treatments: " + reqNumOfTreatments);
+                        int gainFromTreatment = (100 - patient.getHealthIndex()) / reqNumOfTreatments;
                         System.out.println(patient.getName() + "'s health index: " + patient.getHealthIndex());
                         patient.receiveTreatment(gainFromTreatment);
                         System.out.println(patient.getName() + "'s new health index: " + patient.getHealthIndex());
@@ -212,6 +223,7 @@ public class HospitalWorld {
             } else {
                 break;
             }
+            scanner.nextLine();
             System.out.print("Would you like to treat a patient? (Y/N): ");
             choice = scanner.nextLine();
         }

@@ -27,6 +27,8 @@ public class Patient {
 
     public void receiveTreatment(int healed) {
         healthIndex += healed;
+        int numberOfTreatments = myDisease.getAssociatedSpecialty().getNumOfTreatments();
+        myDisease.getAssociatedSpecialty().setNumOfTreatments(numberOfTreatments-1);
     }
 
     public boolean isHealed() {
