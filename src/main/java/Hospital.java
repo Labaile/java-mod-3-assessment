@@ -1,4 +1,4 @@
- //import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -37,7 +37,7 @@ public class Hospital {
 
     public void saveHospitalToFile() throws IOException {
         FileWriter fileWriter = new FileWriter("output.txt");
-        String hospital = doctors.toString(); // new ObjectMapper().writeValueAsString(doctors);
+        String hospital = new ObjectMapper().writeValueAsString(doctors);
 
         fileWriter.write(hospital);
         fileWriter.close();
