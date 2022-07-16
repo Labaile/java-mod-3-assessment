@@ -1,14 +1,13 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Doctor {
-
+    private List<Patient> patients;
     private String name;
-    private String specialty;
-    private ArrayList<Patient> patients;
+    private Specialty specialty;
 
-
-    public Doctor(String name, String specialty) {
+    public Doctor(String name, Specialty specialty) {
         this.name = name;
         this.specialty = specialty;
         patients = new ArrayList<>();
@@ -22,15 +21,15 @@ public class Doctor {
         this.name = name;
     }
 
-    public String getSpecialty() {
+    public Specialty getSpecialty() {
         return specialty;
     }
 
-    public void setSpecialty(String specialty) {
+    public void setSpecialty(Specialty specialty) {
         this.specialty = specialty;
     }
 
-    public ArrayList<Patient> getPatients() {
+    public List<Patient> getPatients() {
         return patients;
     }
 
@@ -41,11 +40,14 @@ public class Doctor {
     public void addPatient(Patient patient) {
         patients.add(patient);
     }
+    public void removePatient(Patient patient) {
+        patients.remove(patient);
+    }
 
     @Override
     public String toString() {
         String str =  "     Doctor Name: " + name + "\n" +
-                "     Specialty: " + specialty + "\n" +
+                "     Specialty: " + specialty.getName() + "\n" +
                 "     Patients: \n";
         for (Patient patient : patients) {
             str += "          " + patient + "\n";

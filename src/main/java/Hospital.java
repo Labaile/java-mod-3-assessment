@@ -1,9 +1,14 @@
+//import com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class Hospital {
     private String name;
-    private ArrayList<Doctor> doctors;
+    private List<Doctor> doctors;
 
     public Hospital(String name) {
         this.name = name;
@@ -18,16 +23,25 @@ public class Hospital {
         this.name = name;
     }
 
-    public ArrayList<Doctor> getDoctors() {
+    public List<Doctor> getDoctors() {
         return doctors;
     }
 
-    public void setDoctors(ArrayList<Doctor> doctors) {
+    public void setDoctors(List<Doctor> doctors) {
         this.doctors = doctors;
     }
 
     public void addDoctor(Doctor doctor) {
         doctors.add(doctor);
+    }
+
+    public void saveHospitalToFile() throws IOException {
+        FileWriter fileWriter = new FileWriter("output.txt");
+        String hospital = doctors.toString();
+        //new ObjectMapper().writeValueAsString(doctors);
+
+        fileWriter.write(hospital);
+        fileWriter.close();
     }
 
     @Override
@@ -36,6 +50,11 @@ public class Hospital {
                 " Doctors: \n\n";
         for (Doctor doctor : doctors) {
             string += doctor + "\n\n";
+        }
+        try {
+            saveHospitalToFile();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
         return string;
     }
